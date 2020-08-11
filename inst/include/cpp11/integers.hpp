@@ -132,6 +132,12 @@ inline void r_vector<int>::push_back(int value) {
   ++length_;
 }
 
+template <>
+template <typename U>
+inline disable_if_sexp<U> r_vector<int>::push_back(SEXP value) {
+  push_back(as_cpp<int>(value));
+}
+
 typedef r_vector<int> integers;
 
 }  // namespace writable

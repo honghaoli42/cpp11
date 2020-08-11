@@ -57,6 +57,20 @@ context("doubles-C++") {
     expect_true(x[0] == 1);
     expect_true(x[1] == 2);
   }
+  test_that("doubles.push_back(named_arg)") {
+    using namespace cpp11::literals;
+    cpp11::writable::doubles x;
+    x.push_back("foo"_nm = 1);
+    x.push_back("bar"_nm = 2);
+    expect_true(x[0] == 1);
+    expect_true(x[1] == 2);
+
+    cpp11::strings nms(x.names());
+
+    expect_true(nms.size() == 2);
+    expect_true(nms[0] == "foo");
+    expect_true(nms[1] == "bar");
+  }
   test_that("doubles.resize()") {
     cpp11::writable::doubles x;
     x.resize(2);

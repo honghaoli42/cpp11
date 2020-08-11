@@ -13,6 +13,21 @@ context("strings-C++") {
     expect_true(x[0] == "a");
     expect_true(x[1] == "b");
   }
+  test_that("strings.push_back(named_arg)") {
+    using namespace cpp11::literals;
+    cpp11::writable::strings x;
+    x.push_back("foo"_nm = "a");
+    x.push_back("bar"_nm = "b");
+
+    expect_true(x.size() == 2);
+    expect_true(x[0] == "a");
+    expect_true(x[1] == "b");
+
+    cpp11::strings nms(x.names());
+    expect_true(nms.size() == 2);
+    expect_true(nms[0] == "foo");
+    expect_true(nms[1] == "bar");
+  }
   test_that("strings.resize()") {
     cpp11::writable::strings x;
     x.resize(2);

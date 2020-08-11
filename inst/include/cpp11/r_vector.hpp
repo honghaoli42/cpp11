@@ -199,6 +199,9 @@ namespace writable {
 template <typename T>
 using has_begin_fun = std::decay<decltype(*begin(std::declval<T>()))>;
 
+template <typename T, typename R = void>
+using disable_if_sexp = enable_if_t<!std::is_same<T, SEXP>::value, R>;
+
 /// Read/write access to new or copied r_vectors
 template <typename T>
 class r_vector : public cpp11::r_vector<T> {
@@ -313,6 +316,8 @@ class r_vector : public cpp11::r_vector<T> {
   proxy at(const r_string& name) const;
 
   void push_back(T value);
+  template <typename U = T>
+  disable_if_sexp<U> push_back(SEXP value);
   void push_back(const named_arg& value);
   void pop_back();
 

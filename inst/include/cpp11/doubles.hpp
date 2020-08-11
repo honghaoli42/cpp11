@@ -126,6 +126,12 @@ inline void r_vector<double>::push_back(double value) {
   ++length_;
 }
 
+template <>
+template <typename U>
+inline disable_if_sexp<U> r_vector<double>::push_back(SEXP value) {
+  push_back(as_cpp<double>(value));
+}
+
 typedef r_vector<double> doubles;
 
 }  // namespace writable

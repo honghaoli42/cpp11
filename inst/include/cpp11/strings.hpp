@@ -167,6 +167,11 @@ inline void r_vector<r_string>::push_back(r_string value) {
   ++length_;
 }
 
+template <> template <typename U>
+inline disable_if_sexp<U> r_vector<r_string>::push_back(SEXP value) {
+  push_back(r_string(as_cpp<std::string>(value)));
+}
+
 typedef r_vector<r_string> strings;
 
 template <typename T>

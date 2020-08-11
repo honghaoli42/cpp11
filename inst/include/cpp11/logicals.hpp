@@ -130,6 +130,12 @@ inline void r_vector<Rboolean>::push_back(Rboolean value) {
   ++length_;
 }
 
+template <>
+template <typename U>
+inline disable_if_sexp<U> r_vector<Rboolean>::push_back(SEXP value) {
+  push_back(static_cast<Rboolean>(LOGICAL_ELT(value, 0)));
+}
+
 typedef r_vector<Rboolean> logicals;
 
 }  // namespace writable

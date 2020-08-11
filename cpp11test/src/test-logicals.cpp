@@ -1,5 +1,6 @@
 #include <testthat.h>
 #include "cpp11/logicals.hpp"
+#include "cpp11/strings.hpp"
 
 context("logicals-C++") {
   test_that("logicals.push_back()") {
@@ -10,6 +11,20 @@ context("logicals-C++") {
     expect_true(x.size() == 2);
     expect_true(x[0] == TRUE);
     expect_true(x[1] == FALSE);
+  }
+  test_that("logicals.push_back(named_arg)") {
+    using namespace cpp11::literals;
+    cpp11::writable::logicals x;
+    x.push_back("foo"_nm = true);
+    x.push_back("bar"_nm = 0);
+    expect_true(x[0] == TRUE);
+    expect_true(x[1] == FALSE);
+
+    cpp11::strings nms(x.names());
+
+    expect_true(nms.size() == 2);
+    expect_true(nms[0] == "foo");
+    expect_true(nms[1] == "bar");
   }
   test_that("logicals.resize()") {
     cpp11::writable::logicals x;
